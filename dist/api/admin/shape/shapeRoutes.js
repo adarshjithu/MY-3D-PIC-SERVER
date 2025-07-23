@@ -1,0 +1,20 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const shapeRepository_1 = require("./shapeRepository");
+const shapeService_1 = require("./shapeService");
+const shapeController_1 = require("./shapeController");
+const asyncHandler_1 = __importDefault(require("../../../utils/asyncHandler"));
+const upload_1 = __importDefault(require("../../../utils/image.ts/upload"));
+const shapeRouter = express_1.default.Router();
+const shapeRepository = new shapeRepository_1.ShapeRepository();
+const shapeService = new shapeService_1.ShapeService(shapeRepository);
+const controller = new shapeController_1.ShapeController(shapeService);
+shapeRouter.post("/", upload_1.default.single("image"), (0, asyncHandler_1.default)(controller.createShape.bind(controller)));
+shapeRouter.put("/:shapeId", upload_1.default.single("image"), (0, asyncHandler_1.default)(controller.updateShape.bind(controller)));
+shapeRouter.delete("/:shapeId", (0, asyncHandler_1.default)(controller.deleteShape.bind(controller)));
+shapeRouter.get("/", (0, asyncHandler_1.default)(controller.getAllShapes.bind(controller)));
+exports.default = shapeRouter;

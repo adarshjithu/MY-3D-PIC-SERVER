@@ -2,7 +2,7 @@ import express from 'express';
 import { CustomerRepository } from './customerRepository';
 import { CustomerService } from './customerService';
 import { CustomerController } from './customerController';
-import asyncHandler from '../../utils/asyncHandler';
+import asyncHandler from '../../../utils/asyncHandler';
 
 const customerRoutes =  express.Router();
 

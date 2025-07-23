@@ -1,0 +1,21 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const asyncHandler_1 = __importDefault(require("../../../utils/asyncHandler"));
+const categoryRepository_1 = require("./categoryRepository");
+const categoryService_1 = require("./categoryService");
+const categoryController_1 = require("./categoryController");
+const productRepository_1 = require("../product/productRepository");
+const categoryRouter = express_1.default.Router();
+const categoryRepository = new categoryRepository_1.CategoryRepository();
+const productRepository = new productRepository_1.ProductRepository();
+const categoryService = new categoryService_1.CategoryService(categoryRepository, productRepository);
+const controller = new categoryController_1.CategoryController(categoryService);
+categoryRouter.post('/', (0, asyncHandler_1.default)(controller.createCategory.bind(controller)));
+categoryRouter.put('/:categoryId', (0, asyncHandler_1.default)(controller.updateCategory.bind(controller)));
+categoryRouter.delete('/:categoryId', (0, asyncHandler_1.default)(controller.deleteCategory.bind(controller)));
+categoryRouter.get('/', (0, asyncHandler_1.default)(controller.findAllCategories.bind(controller)));
+exports.default = categoryRouter;

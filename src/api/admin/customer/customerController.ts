@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { CustomerService } from "./customerService";
-import { STATUS_CODES } from "../../constants/statusCodes";
+import { STATUS_CODES } from "../../../constants/statusCodes";
 import mongoose from "mongoose";
-import { UnAuthorizedError } from "../../constants/customErrors";
+import { UnAuthorizedError } from "../../../constants/customErrors";
 const { OK } = STATUS_CODES;
 
 export class CustomerController {

@@ -53,6 +53,7 @@ export class AuthController {
     // @ desc Logout user
     // @ route GET /auth/logout
     // @access User
+    
     async logout(req: Request, res: Response, next: NextFunction): Promise<void> {
         // Clear the cookies
         res.clearCookie("accessToken", {
@@ -68,9 +69,11 @@ export class AuthController {
             .status(OK)
             .json({ success: true, message: "User logged out successfully" });
     }
+
     // @ desc  Register user
     // @ route POST /auth/register
     // @access User
+
     async register(req: Request, res: Response, next: NextFunction): Promise<void> {
         registrationSchema.parse(req.body);
         const result = await this.authService.register(req.body);
@@ -79,9 +82,11 @@ export class AuthController {
             message: "Registration link has been sent to your email. Please check your inbox to complete the registration.",
         });
     }
+
     // @ desc  Verify link
     // @ route POST /auth/verify-link
     // @access User
+
     async verifyLink(req: Request, res: Response, next: NextFunction): Promise<void> {
         const { link } = req.params;
         if (!link) throw new NotFoundError("Authentication link not found");
@@ -102,6 +107,7 @@ export class AuthController {
             })
             .json({ success: true, message: "User registration successfull", data: result });
     }
+
     // @ desc  User login
     // @ route POST /auth/login
     // @access User
@@ -124,6 +130,7 @@ export class AuthController {
             })
             .json({ success: true, message: "User login successfull", data: result });
     }
+
     // @ desc  Update user profile
     // @ route POST /auth/profile
     // @access User
@@ -132,14 +139,15 @@ export class AuthController {
         const result = await this.authService.updateProfile(userId, req.body);
         res.status(OK).json({ success: true, message: "User profile updated successfully", data: result });
     }
+
     // @ desc  Update user profile
     // @ route PATCH /auth/profile/upload
     // @access User
     async uploadProfileImage(req: Request, res: Response, next: NextFunction): Promise<void> {
         const userId = req.userId;
-        const image =  (req.file as any).location;
-        const result =  await this.authService.updateProfileImage(userId as string,image as string)
-        console.log(image)
-        res.status(OK).json({ success: true, message: "User profile updated successfully",data:result });
+        const image = (req.file as any).location;
+        const result = await this.authService.updateProfileImage(userId as string, image as string);
+        console.log(image);
+        res.status(OK).json({ success: true, message: "User profile updated successfully", data: result });
     }
 }

@@ -1,5 +1,5 @@
-import { NotFoundError } from "../../constants/customErrors";
-import { IUser } from "../../types/user";
+import { NotFoundError } from "../../../constants/customErrors";
+import { IUser } from "../../../types/user";
 import { CustomerRepository } from "./customerRepository";
 
 export class CustomerService {

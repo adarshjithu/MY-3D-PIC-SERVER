@@ -1,6 +1,6 @@
-import User from "../../models/userModel";
-import { BaseRepository } from "../../repositories/baseRepository";
-import { IUser } from "../../types/user";
+import User from "../../../models/userModel";
+import { BaseRepository } from "../../../repositories/baseRepository";
+import { IUser } from "../../../types/user";
 
 export class CustomerRepository extends BaseRepository<IUser> {
     constructor() {
