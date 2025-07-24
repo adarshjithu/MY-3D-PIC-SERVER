@@ -39,8 +39,9 @@ const baseSchema = new mongoose.Schema<IBaseProduct>({
     inventory: inventorySchema,
     seo: seoSchema,
     isActive:{type:Boolean,default:true},
-    isDeleted:{type:Boolean,defaut:false}
-});
+    isDeleted:{type:Boolean,defaut:false},
+    size:{type:Object}
+},{timestamps:true});
 
 
 export default mongoose.model<IBaseProduct>("Base",baseSchema);

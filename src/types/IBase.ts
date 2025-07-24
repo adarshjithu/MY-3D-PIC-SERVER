@@ -31,4 +31,5 @@ export interface IBaseProduct {
   isDeleted?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
+  size:any
 }

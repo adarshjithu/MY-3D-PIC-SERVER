@@ -10,7 +10,7 @@ export const errorHandler = (
 ): void => {
     let statusCode = 500;
     let message = "Internal Server Error";
-    
+    console.log(err)
 
     // Mongoose validation error
     if (err instanceof mongoose.Error.ValidationError) {

@@ -1,31 +1,29 @@
+
 import { z } from "zod";
 
 export const baseProductSchema = z.object({
-    name: z.string().min(1, "Name is required"),
-    slug: z.string().min(1, "Slug is required"),
-    description: z.string().min(1, "Description is required"),
+  name: z.string().min(1, "Product name is required"),
+  description: z.string().min(1, "Description is required"),
 
-    price: z.object({
-        basePrice: z.number({ message: "Base price is required" }),
-        actualPrice: z.number().optional(),
-    }),
+  basePrice: z.preprocess((val) => Number(val), z.number().positive("Base price must be a positive number")),
+  actualPrice: z.preprocess((val) => Number(val), z.number().positive("Actual price must be a positive number")),
 
-    thumbnail: z.string().min(1, "Thumbnail URL is required"),
-    images: z.array(z.string()).optional(),
+  quantity: z.preprocess((val) => Number(val), z.number().int().nonnegative("Quantity must be a non-negative integer")),
 
-    inventory: z.object({
-        quantity: z.number().default(0),
-        sku: z.string().optional(),
-        lowStockThreshold: z.number().default(5),
-        allowBackorder: z.boolean().default(false),
-        isTrackable: z.boolean().default(true),
-    }),
+  sku: z.string().optional(),
 
-    seo: z.object({
-        metaTitle: z.string().optional(),
-        metaDescription: z.string().optional(),
-        metaKeywords: z.array(z.string()).optional(),
-    }),
+  lowStockThreshold: z.preprocess((val) => Number(val), z.number().int().nonnegative("Low stock threshold must be a number")),
 
- 
+  allowBackorder: z.preprocess((val) => val === 'true', z.boolean()),
+  isTrackable: z.preprocess((val) => val === 'true', z.boolean()),
+
+  metaTitle: z.string().optional(),
+  metaDescription: z.string().optional(),
+
+  metaKeywords: z.preprocess(
+    (val) => typeof val === 'string' ? val.split(',').map(k => k.trim()) : [],
+    z.array(z.string())
+  ),
+
+  isActive: z.preprocess((val) => val === 'true', z.boolean()),
 });

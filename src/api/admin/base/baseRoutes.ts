@@ -20,5 +20,6 @@ baseRoutes.post(
     asyncHandler(controller.createBaseProduct.bind(controller))
 );
 baseRoutes.get("/", asyncHandler(controller.getAllBaseProducts.bind(controller)));
+baseRoutes.delete("/:baseProductId", asyncHandler(controller.deleteBaseProduct.bind(controller)));
 
 export default baseRoutes;

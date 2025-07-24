@@ -18,4 +18,5 @@ baseRoutes.post("/", upload_1.default.fields([
     { name: "images", maxCount: 5 },
 ]), (0, asyncHandler_1.default)(controller.createBaseProduct.bind(controller)));
 baseRoutes.get("/", (0, asyncHandler_1.default)(controller.getAllBaseProducts.bind(controller)));
+baseRoutes.delete("/:baseProductId", (0, asyncHandler_1.default)(controller.deleteBaseProduct.bind(controller)));
 exports.default = baseRoutes;

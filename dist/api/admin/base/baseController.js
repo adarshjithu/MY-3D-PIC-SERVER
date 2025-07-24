@@ -8,11 +8,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BaseproductController = void 0;
 const statusCodes_1 = require("../../../constants/statusCodes");
 const customErrors_1 = require("../../../constants/customErrors");
 const baseProductValidation_1 = require("../../../validation/baseProductValidation");
+const mongoose_1 = __importDefault(require("mongoose"));
 const { OK, CREATED } = statusCodes_1.STATUS_CODES;
 class BaseproductController {
     constructor(baseProductService) {
@@ -29,6 +33,8 @@ class BaseproductController {
             if (!thumbnail)
                 throw new customErrors_1.NotFoundError("Thumbnail image is required");
             baseProductValidation_1.baseProductSchema.parse(req.body);
+            const result = yield this.baseProductService.createBaseProduct(thumbnail, images, req.body);
+            res.status(CREATED).json({ success: true, message: "New base product successfully created", data: result });
         });
     }
     // @desc   Get all base products
@@ -38,6 +44,18 @@ class BaseproductController {
         return __awaiter(this, void 0, void 0, function* () {
             const result = yield this.baseProductService.getAllBaseProducts(req.query);
             res.status(OK).json({ success: true, message: "", data: result });
+        });
+    }
+    // @desc   Delete base product
+    // @access User
+    // @route DELETE /base
+    deleteBaseProduct(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { baseProductId } = req.params;
+            if (!mongoose_1.default.Types.ObjectId.isValid(baseProductId))
+                throw new customErrors_1.BadRequestError("Invalid base product Id");
+            const result = yield this.baseProductService.deleteBaseProduct(baseProductId);
+            res.status(OK).json({ success: true, message: "The base product sucessfully deleted", data: result });
         });
     }
 }

@@ -21,7 +21,21 @@ class BaseproductRepository extends baseRepository_1.BaseRepository {
     }
     getAllBaseProducts(query) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield baseModel_1.default.find();
+            const filter = {};
+            filter.isDeleted = false;
+            const baseProducts = yield baseModel_1.default.find(filter);
+            const totalPages = yield baseModel_1.default.countDocuments();
+            return { baseProducts, totalPages };
+        });
+    }
+    findByName(name) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield baseModel_1.default.findOne({ name: name });
+        });
+    }
+    toggleSoftDelete(productId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield baseModel_1.default.findByIdAndUpdate(productId, [{ $set: { isDeleted: { $not: "$isDeleted" } } }], { new: true });
         });
     }
 }

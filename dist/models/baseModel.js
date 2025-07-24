@@ -30,6 +30,7 @@ const baseSchema = new mongoose_1.default.Schema({
     inventory: inventorySchema,
     seo: seoSchema,
     isActive: { type: Boolean, default: true },
-    isDeleted: { type: Boolean, defaut: false }
-});
+    isDeleted: { type: Boolean, defaut: false },
+    size: { type: Object }
+}, { timestamps: true });
 exports.default = mongoose_1.default.model("Base", baseSchema);
